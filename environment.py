@@ -43,9 +43,11 @@ def crop_half(image):
 def BasicAgent(img):
   vectorized = img.reshape((-1,3))
   vectorized = np.float32(vectorized)
+
   criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
   K = 5
   attempts=10
+  # Running k means, with k = 5
   ret,label,center=cv2.kmeans(vectorized,K,None,criteria,attempts,cv2.KMEANS_PP_CENTERS)
   center = np.uint8(center)
   res = center[label.flatten()]
