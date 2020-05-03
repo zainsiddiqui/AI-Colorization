@@ -13,4 +13,3 @@ class Picture:
 
 Picture("beach.jpg")
 
-        
