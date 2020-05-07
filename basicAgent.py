@@ -44,7 +44,7 @@ def BasicAgent(img):
   vectorized = np.float32(vectorized)
 
   criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
-  K = 5
+  K = 30
   attempts=10
   # Running k means, with k = 5
   ret,label,center=cv2.kmeans(vectorized,K,None,criteria,attempts,cv2.KMEANS_PP_CENTERS)
@@ -59,19 +59,19 @@ def BasicAgent(img):
   result_image = res.reshape((img.shape))
 
   # Displaying image
-  figure_size = 15
+  figure_size = 30
   plt.figure(figsize=(figure_size/2,figure_size/2))
   plt.subplot(1,2,1),plt.imshow(img)
   plt.title('Original Image'), plt.xticks([]), plt.yticks([])
   plt.subplot(1,2,2),plt.imshow(result_image)
-  plt.title('Segmented Image when K = %i' % K), plt.xticks([]), plt.yticks([])
+  plt.title('Basic Agent Image' ), plt.xticks([]), plt.yticks([])
   plt.show()
 
 
 
-
 # Loading image
-original_image = cv2.imread("2-venice-landmark-burano-island-canal-colorful-houses-and-boats-stevanzz-photography.jpg")
+original_image = cv2.imread("beach.jpg")
+
 orig=cv2.cvtColor(original_image,cv2.COLOR_BGR2RGB)
 
 # Cropping original image
@@ -81,6 +81,7 @@ end_row = coord[1]
 start_col = coord[2]
 end_col = coord[3]
 
+imgO = original_image[start_row:end_row , start_col:end_col]
 # Obtaining training image
 img = orig[start_row:end_row , start_col:end_col]
 
@@ -91,7 +92,7 @@ greyimg = cv2.cvtColor(greyimg, cv2.COLOR_BGR2GRAY)
 greyimg = cv2.cvtColor(greyimg,cv2.COLOR_GRAY2BGR)
 
 # Images array containing training and testing data
-imgs = [img,greyimg]
+imgs = [imgO,greyimg]
 cv2.imshow("grey img", greyimg) 
 
 # height, width,z = img.shape[:3]
@@ -103,6 +104,7 @@ cv2.imshow("grey img", greyimg)
 min_shape = sorted( [(np.sum(i.size), i.size ) for i in imgs])[0][1]
 # Combining training and testing data
 imgs_comb = np.hstack( (np.asarray( imgs ) ))
+cv2.imshow("training and testing combined image", imgs_comb) 
 
 # Running basic agent on testing and training data
 BasicAgent(orig)
