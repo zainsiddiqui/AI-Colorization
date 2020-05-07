@@ -18,7 +18,7 @@ class ConvNeuralNetwork:
     def rgbgrey(rgb):
         return np.dot(rgb[...,:3], [.21,.72,.07])
 
-    def generateFilter(self, numFilters, x, y):
+    def generateFilter1(self, numFilters, x, y):
         filterr = np.zeros((numFilters,x,y), dtype=int)
         #print(filterr)
         for k in range(numFilters):
@@ -42,7 +42,55 @@ class ConvNeuralNetwork:
                         count = 0        
         return filterr 
 
-    def applyFilter1(self, filterr, data):
+    def generateFilter2(self, numFilters, x, y):
+        filterr = np.zeros((numFilters,x,y), dtype=int)
+        #print(filterr)
+        for k in range(numFilters):
+            count = k
+            for i in range(x):
+                for j in range(y):
+                    if (count == 0):
+                        filterr[k][i][j] = 2
+                        filterr[k][i][j] = 0
+                        filterr[k][i][j] = 2
+                        count = 1
+                    elif (count == 1):
+                        filterr[k][i][j] = 0
+                        filterr[k][i][j] = -1
+                        filterr[k][i][j] = 0
+                        count = 2
+                    else:
+                        filterr[k][i][j] = 1
+                        filterr[k][i][j] = 0
+                        filterr[k][i][j] = 1
+                        count = 0        
+        return filterr 
+
+        def generateFilter3(self, numFilters, x, y):
+        filterr = np.zeros((numFilters,x,y), dtype=int)
+        #print(filterr)
+        for k in range(numFilters):
+            count = k
+            for i in range(x):
+                for j in range(y):
+                    if (count == 0):
+                        filterr[k][i][j] = 0
+                        filterr[k][i][j] = -1
+                        filterr[k][i][j] = 0
+                        count = 1
+                    elif (count == 1):
+                        filterr[k][i][j] = 2
+                        filterr[k][i][j] = 0
+                        filterr[k][i][j] = 2
+                        count = 2
+                    else:
+                        filterr[k][i][j] = 0
+                        filterr[k][i][j] = 1
+                        filterr[k][i][j] = 0
+                        count = 0        
+        return filterr 
+
+    def applyFilter(self, filterr, data):
         #print((filterr[0]))
         new = np.zeros((len(filterr[0]),len(filterr[0][0])), dtype = int )
         print(new[0][0])
