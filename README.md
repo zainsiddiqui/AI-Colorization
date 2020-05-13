@@ -1,1 +1,1 @@
-# Colorization-AI
+# AI-Colorization
